@@ -1,0 +1,78 @@
+﻿<Window x:Class="FileRenamer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"        
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"        
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FileRenamer"
+        mc:Ignorable="d"
+        Title="Переименователь файлов - №1 © А.К." MinHeight="540" MinWidth="600" Height="540" Width="600" Icon="graph.ico" Initialized="Window_Initialized">
+
+    <DockPanel Height="Auto">
+        <Menu Height="25" DockPanel.Dock="Top">
+            <MenuItem Header="Файл">
+                <MenuItem Header="Выбрать файлы" Click="BrowseFileButton_Click"/>
+                <MenuItem Header="Выбрать папку" Click="BrowseDirButton_Click"/>
+                <MenuItem Header="Выход" Click="MenuExit_Click"/>                
+            </MenuItem>
+            <MenuItem Header="О программе" Click="MenuAboutItem_Click"/>
+        </Menu>
+
+        <Grid >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25"> </RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="25"></RowDefinition>
+                <RowDefinition Height="25"></RowDefinition>
+                <RowDefinition Height="25"></RowDefinition>
+                <RowDefinition Height="25"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="25"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <TextBox Grid.Column="0" x:Name="DirPatch" Text="Путь к файлам" IsReadOnly ="True" />
+                <Button Grid.Column="1" x:Name="BrowseFileButton" Content="Выбрать файлы"  Click="BrowseFileButton_Click"/>
+                <Button Grid.Column="2" x:Name="BrowseDirButton" Content="Выбрать папку"  Click="BrowseDirButton_Click"/>
+            </Grid>
+            <ScrollViewer Grid.Row="1" MinHeight="150">
+                <TextBox x:Name="OriginalList" Text="Список оригиналов" IsReadOnly ="True"
+                             ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" />
+            </ScrollViewer>
+
+            <ComboBox Grid.Row="2" x:Name="ComboMode" SelectionChanged="ComboMode_SelectionChanged">
+                <ComboBoxItem x:Name="ComboItem_RootDir" Content="Режим переименования: [корневой_каталог]-[имя_файла]"/>
+                <ComboBoxItem x:Name="ComboItem_UpDir" Content="Режим переименования: [текущий_каталог]-[имя_файла]"/>
+                <ComboBoxItem x:Name="ComboItem_OnlyReplace" Content="Режим переименования: только замена части имени файла"/>
+                <ComboBoxItem x:Name="Template" Content="Режим переименования: Свой шаблон"/>
+                <ComboBoxItem x:Name="Cancel" Content="Вернуть как было: [имя_файла]"/>
+            </ComboBox>
+            <TextBox Grid.Row="3" x:Name="RenameTemplateBox" Text="Шаблон для переименования -" TextChanged="RenameTemplate_TextChanged" TextInput="RenameTemplate_TextInpuit" />
+            
+            
+
+            <Grid Grid.Row="4" Height="25">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>                
+                <TextBox Grid.Column="0" x:Name="ReplaceInNameSource" Text="Найти для замены:" TextChanged="ReplaceInNameSource_TextChanged"/>
+                <TextBox Grid.Column="1" x:Name="ReplaceInNameTemplate" Text="Заменить на:" TextChanged="ReplaceInNameTemplate_TextChanged"/>
+            </Grid>
+
+            <Button Grid.Row="5" Height="30" Content="Переименовать" Click="RenameButton_Click"  />
+
+            <ScrollViewer Grid.Row="6">
+                <TextBox MinHeight="150" x:Name="RenameList" TextWrapping="Wrap" Text="Новые имена файлов"  IsReadOnly ="True"
+                            ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" />
+            </ScrollViewer>
+            <StatusBar Grid.Row="7" Height="20" DockPanel.Dock="Bottom" VerticalAlignment="Bottom">
+                <TextBlock x:Name="StatusBarText">Выберите файлы для обработки</TextBlock>
+            </StatusBar>
+        </Grid>
+        
+    </DockPanel>
+</Window>
